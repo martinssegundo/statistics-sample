@@ -23,20 +23,22 @@ public class Statistic {
     }
 
     public void addStatistic(String dateTime, BigDecimal amount) {
-        if (verifyNewStatistic(dateTime))
+        if (verifyNonExistsStatistic(dateTime))
             newStatistics(dateTime, amount);
         else
             updateStatistics(dateTime, amount);
     }
 
     public StatisticDTO findStatistic(String dateTime) {
-        return new StatisticDTO(
-                AmoutUtil.setScaleAndHalfUpBigDecimal(sum.get(dateTime)),
-                AmoutUtil.setScaleAndHalfUpBigDecimal(avg.get(dateTime)),
-                AmoutUtil.setScaleAndHalfUpBigDecimal(max.get(dateTime)),
-                AmoutUtil.setScaleAndHalfUpBigDecimal(min.get(dateTime)),
-                count.get(dateTime)
-        );
+        if(!verifyNonExistsStatistic(dateTime))
+            return new StatisticDTO(
+                    AmoutUtil.setScaleAndHalfUpBigDecimal(sum.get(dateTime)),
+                    AmoutUtil.setScaleAndHalfUpBigDecimal(avg.get(dateTime)),
+                    AmoutUtil.setScaleAndHalfUpBigDecimal(max.get(dateTime)),
+                    AmoutUtil.setScaleAndHalfUpBigDecimal(min.get(dateTime)),
+                    count.get(dateTime)
+            );
+        return null;
     }
 
     private void newStatistics(String dateTime, BigDecimal amount) {
@@ -83,7 +85,7 @@ public class Statistic {
         count.put(dateTime, count.getOrDefault(dateTime, 0L) + 1);
     }
 
-    private Boolean verifyNewStatistic(String dateTime) {
+    private Boolean verifyNonExistsStatistic(String dateTime) {
         return sum.get(dateTime) == null;
     }
 

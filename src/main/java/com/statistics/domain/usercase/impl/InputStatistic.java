@@ -33,7 +33,9 @@ public class InputStatistic implements IInputStatistic {
         statisticRepository.updataStatistic(mapper.convertTo(statisticDomain));
     }
 
+    private void verifyLocalDate(){
 
+    }
 
 
 }

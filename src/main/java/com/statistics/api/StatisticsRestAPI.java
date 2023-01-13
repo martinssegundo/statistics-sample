@@ -37,17 +37,21 @@ public class StatisticsRestAPI {
         this.mapper = mapper;
     }
 
-    @GET
-    @Path("statistics")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String findAllLastMinut() {
-        return "Hello from RESTEasy Reactive";
-    }
-
     @POST
     @Path("transactions")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAllLastMinut(@RequestBody InputDataDTO inputData) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addStatistic(InputDataDTO newStatistic) {
+        inputStatistic.inputStatistic(newStatistic.getTimestamp(), newStatistic.getAmount());
+        return Response.status(Response.Status.CREATED).build();
+    }
+
+
+    @GET
+    @Path("statistics")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response findAllLastMinut() {
         var response = mapper.convertToResponse(findStatistics.findLastMinutStatistics());
         return Response.ok(response).build();
     }
@@ -56,7 +60,7 @@ public class StatisticsRestAPI {
     @Path("transactions")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteAll() {
-        deleteAll();
+        deleteAllStatistics.deleteAll();
         return Response.noContent().build();
     }
 }
