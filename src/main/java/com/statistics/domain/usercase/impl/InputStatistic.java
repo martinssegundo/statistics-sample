@@ -1,16 +1,12 @@
 package com.statistics.domain.usercase.impl;
 
 import com.statistics.domain.usercase.IInputStatistic;
-import com.statistics.domain.usercase.util.AmoutUtil;
-import com.statistics.domain.usercase.util.DateTimeUtil;
+import com.statistics.domain.util.AmoutUtil;
+import com.statistics.domain.util.DateTimeUtil;
+import com.statistics.exceptions.FutureTimeException;
+import com.statistics.exceptions.PastTimeException;
 import com.statistics.mappers.StatisticMapper;
 import com.statistics.repository.IStatisticRepository;
-import com.statistics.repository.impl.StatisticRepository;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class InputStatistic implements IInputStatistic {
 
@@ -24,7 +20,7 @@ public class InputStatistic implements IInputStatistic {
     }
 
     @Override
-    public void inputStatistic(LocalDateTime dateTime, String amout) {
+    public void inputStatistic(String dateTime, String amout) {
         var statisticDomain = mapper.convertTo(statisticRepository.findStatistic());
         statisticDomain.addStatistic(
                 DateTimeUtil.stringfyDateTime(dateTime),
@@ -33,9 +29,19 @@ public class InputStatistic implements IInputStatistic {
         statisticRepository.updataStatistic(mapper.convertTo(statisticDomain));
     }
 
-    private void verifyLocalDate(){
-
+    private void isLocalDateInPast(String dateTime) throws FutureTimeException{
+        var dateTimeFuture = dateTime.plusMinutes(-1);
+        if(dateTime.compareTo(dateTimeFuture) < 0)
+            throw new PastTimeException("Date time in past");
     }
 
+    private void isLocalDateInFuture(String dateTime) throws FutureTimeException{
+        var dateTimeFuture = dateTime.plusMinutes(1);
+        if(dateTime.compareTo(dateTimeFuture) > 0)
+            throw new FutureTimeException("Date time in future");
+    }
 
+    private boolean isNumber(String number){
+        return number.matches("^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$");
+    }
 }

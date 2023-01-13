@@ -1,6 +1,6 @@
 package com.statistics.domain;
 
-import com.statistics.domain.usercase.util.AmoutUtil;
+import com.statistics.domain.util.AmoutUtil;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

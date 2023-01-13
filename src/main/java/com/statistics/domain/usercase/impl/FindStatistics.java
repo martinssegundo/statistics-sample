@@ -2,7 +2,7 @@ package com.statistics.domain.usercase.impl;
 
 import com.statistics.domain.usercase.IFindStatistics;
 import com.statistics.domain.usercase.dtos.StatisticDTO;
-import com.statistics.domain.usercase.util.DateTimeUtil;
+import com.statistics.domain.util.DateTimeUtil;
 import com.statistics.mappers.StatisticMapper;
 import com.statistics.repository.IStatisticRepository;
 

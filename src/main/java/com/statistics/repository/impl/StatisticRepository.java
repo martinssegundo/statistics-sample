@@ -3,15 +3,16 @@ package com.statistics.repository.impl;
 import com.statistics.repository.IStatisticRepository;
 import com.statistics.repository.entities.StatisticEntity;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Singleton;
 
-@Singleton
+@ApplicationScoped
 public class StatisticRepository implements IStatisticRepository {
 
     private StatisticEntity statisticEntity;
 
     public StatisticRepository(){
-        this.statisticEntity = StatisticEntity.builder().build();
+        this.statisticEntity = new StatisticEntity();
     }
 
     @Override
@@ -30,7 +31,7 @@ public class StatisticRepository implements IStatisticRepository {
 
     @Override
     public void deleteAll() {
-        this.statisticEntity = StatisticEntity.builder().build();
+        this.statisticEntity = new StatisticEntity();
     }
 
 

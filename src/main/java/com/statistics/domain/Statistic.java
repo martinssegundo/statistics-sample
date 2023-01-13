@@ -1,7 +1,7 @@
 package com.statistics.domain;
 
 import com.statistics.domain.usercase.dtos.StatisticDTO;
-import com.statistics.domain.usercase.util.AmoutUtil;
+import com.statistics.domain.util.AmoutUtil;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -89,4 +89,44 @@ public class Statistic {
         return sum.get(dateTime) == null;
     }
 
+
+    public Map<String, BigDecimal> getSum() {
+        return sum;
+    }
+
+    public void setSum(Map<String, BigDecimal> sum) {
+        this.sum = sum;
+    }
+
+    public Map<String, BigDecimal> getAvg() {
+        return avg;
+    }
+
+    public void setAvg(Map<String, BigDecimal> avg) {
+        this.avg = avg;
+    }
+
+    public Map<String, BigDecimal> getMax() {
+        return max;
+    }
+
+    public void setMax(Map<String, BigDecimal> max) {
+        this.max = max;
+    }
+
+    public Map<String, BigDecimal> getMin() {
+        return min;
+    }
+
+    public void setMin(Map<String, BigDecimal> min) {
+        this.min = min;
+    }
+
+    public Map<String, Long> getCount() {
+        return count;
+    }
+
+    public void setCount(Map<String, Long> count) {
+        this.count = count;
+    }
 }

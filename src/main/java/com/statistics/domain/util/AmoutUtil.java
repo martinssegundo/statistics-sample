@@ -1,4 +1,4 @@
-package com.statistics.domain.usercase.util;
+package com.statistics.domain.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

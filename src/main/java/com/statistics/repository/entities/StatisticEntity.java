@@ -1,13 +1,16 @@
 package com.statistics.repository.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Map;
 
-@Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class StatisticEntity {
     private Map<String, BigDecimal> sum;
     private Map<String, BigDecimal> avg;
