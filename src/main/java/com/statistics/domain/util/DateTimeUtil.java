@@ -10,7 +10,8 @@ public class DateTimeUtil {
         return dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 
-    public static LocalDateTime convertTo(){
-        
+    public static LocalDateTime convertTo(String dateTime){
+        return LocalDateTime.parse(dateTime,
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 }

@@ -6,9 +6,13 @@ import com.statistics.domain.usercase.IFindStatistics;
 import com.statistics.domain.usercase.IInputStatistic;
 import com.statistics.domain.usercase.impl.FindStatistics;
 import com.statistics.domain.usercase.impl.InputStatistic;
+import com.statistics.exceptions.FutureTimeException;
+import com.statistics.exceptions.NumberException;
+import com.statistics.exceptions.PastTimeException;
 import com.statistics.mappers.StatisticMapper;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Qualifier;
@@ -30,7 +34,7 @@ public class StatisticsRestAPI {
     public StatisticsRestAPI(@Named("findStatistics") IFindStatistics findStatistics,
                              @Named("inputStatistic") IInputStatistic inputStatistic,
                              @Named("deleteAllStatistics") IDeleteAllStatistics deleteAllStatistics,
-                             StatisticMapper mapper){
+                             @Default StatisticMapper mapper){
         this.findStatistics = findStatistics;
         this.inputStatistic = inputStatistic;
         this.deleteAllStatistics = deleteAllStatistics;
@@ -42,8 +46,14 @@ public class StatisticsRestAPI {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addStatistic(InputDataDTO newStatistic) {
-        inputStatistic.inputStatistic(newStatistic.getTimestamp(), newStatistic.getAmount());
-        return Response.status(Response.Status.CREATED).build();
+        try {
+            inputStatistic.inputStatistic(newStatistic.getTimestamp(), newStatistic.getAmount());
+            return Response.status(Response.Status.CREATED).build();
+        }catch (FutureTimeException | NumberException exception){
+            return Response.status(422).build();
+        }catch (PastTimeException pastException){
+            return Response.status(204).build();
+        }
     }
 
 
